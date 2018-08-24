@@ -1,0 +1,25 @@
+{
+  "name": "observer",
+  "version": "1.0.0",
+  "description": "Observable notebooks on a server",
+  "main": "observer.js",
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "puppeteer-core": "^1.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo 'Error: no test specified' && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jflatow/observer.git"
+  },
+  "author": "Jared Flatow",
+  "license": "UNLICENSED",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/jflatow/observer/issues"
+  },
+  "homepage": "https://github.com/jflatow/observer#readme"
+}

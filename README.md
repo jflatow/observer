@@ -1,7 +1,7 @@
 # Observer
 
 ```
-make run
+./observer.js
 ```
 
 Then visit `localhost:9222`.
@@ -10,7 +10,7 @@ In the devtools inspector, the current value of your cells are in the global var
 Provide another notebook or Chrome:
 
 ```
-make run CHROME_PATH=/path/to/my/chrome NOTEBOOK=my://notebook/url
+./observer.js --executablePath /path/to/my/chrome my://notebook/urls
 ```
 
 See also: https://beta.observablehq.com/@jflatow/headless-observable
