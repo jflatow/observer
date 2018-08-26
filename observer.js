@@ -9,7 +9,9 @@ function guessRemotePort(opts) {
 }
 
 function guessChromeExecutable(opts) {
-  return `/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary`
+  if (process.platform.match(/darwin/i))
+    return `/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary`
+  return `chromium-browser`
 }
 
 function guessNotebookUrls(opts, urls) {
@@ -26,15 +28,17 @@ async function main(opts = {}) {
   const {
     _: urls,
     headless,
+    noSandbox,
     remotePort = guessRemotePort(opts),
     executablePath = guessChromeExecutable(opts),
     notebookUrls = guessNotebookUrls(opts, urls),
   } = opts;
+  const sandbox = noSandbox ? ['--no-sandbox'] : []
   const loaders = pageLoaders(notebookUrls)
   const browser = await puppeteer.launch({
     headless,
     executablePath,
-    args: [`--remote-debugging-port=${remotePort}`, ...loaders]
+    args: [`--remote-debugging-port=${remotePort}`, ...sandbox, ...loaders]
   })
 }
 
@@ -42,14 +46,16 @@ if (require.main == module)
   main(minimist(process.argv.slice(2), {
     alias: {
       'p': 'executablePath',
-      'P': 'remotePort'
+      'P': 'remotePort',
+      'S': 'noSandbox'
     },
     string: [
       'remotePort',
       'executablePath'
     ],
-    boolean: ['headless'],
+    boolean: ['headless', 'noSandbox'],
     default: {
-      headless: true
+      headless: true,
+      noSandbox: false
     }
   }))

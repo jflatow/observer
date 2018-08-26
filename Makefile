@@ -1,10 +1,27 @@
 
-NOTEBOOK = https://api.observablehq.com/@jflatow/headless-observable.js?key=7d7a86c7b4aefbef
+IMAGE  = observer
+RDP    = 9222
+LRDP   = 9223
+ENV    = -e RDP=$(RDP) -e LRDP=$(LRDP)
+EXPOSE = -p $(RDP):$(RDP)
 
-CHROME_PATH = /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary
-CHROME_PORT = 9222
-CHROME_OPTS = --remote-debugging-port=$(CHROME_PORT) --headless
-CHROME_PAGE = file:///$(abspath notebook.html)\#$(NOTEBOOK)
+.PHONY: build image rinse
+
+build:
+	npm install
+
+image:
+	docker build -t $(IMAGE) .
+
+rinse:
+	docker kill $(shell docker ps --filter "status=created" -q) || true
+	docker rmi -f $(shell docker images --filter "dangling=true" -q)
 
 run:
-	$(CHROME_PATH) $(CHROME_OPTS) $(CHROME_PAGE)
+	docker run --rm -it $(ENV) $(EXPOSE) observer
+
+run-debug:
+	docker run --rm -it $(ENV) $(EXPOSE) --entrypoint /bin/sh observer
+
+remsh:
+	docker exec -it $(shell docker ps --filter "ancestor=observer" -q) /bin/sh

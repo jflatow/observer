@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# get the bindir
+bin=`dirname $0`
+
+# proxy rdp -> lrdp
+nc -lk -p $1 -e nc 127.0.0.1 $2 &
+
+# run observer on lrdp
+$bin/../observer.js -S -P $2
