@@ -5,7 +5,7 @@
   "main": "observer.js",
   "dependencies": {
     "minimist": "^1.2.0",
-    "puppeteer-core": "^1.7.0"
+    "puppeteer": "^1.7.0"
   },
   "devDependencies": {},
   "scripts": {

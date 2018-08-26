@@ -2,14 +2,14 @@
 
 const path = require('path')
 const minimist = require('minimist')
-const puppeteer = require('puppeteer-core')
+const puppeteer = require('puppeteer')
 
 function guessRemotePort(opts) {
   return 9222;
 }
 
 function guessChromeExecutable(opts) {
-  return `/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary`
+  return undefined;
 }
 
 function guessNotebookUrls(opts, urls) {
